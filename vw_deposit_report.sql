@@ -47,6 +47,7 @@ mergeddeposit AS (
         MD.[TotalValue],
         MD.[OriginalBagnumber],
         MD.[SlipDate],
+        MD.[ProcessingDateKey]
         CASE WHEN  CustomerValue <0 THEN TotalValue - CustomerValue END AS Shorts,
         CASE WHEN  CustomerValue >0 THEN TotalValue - CustomerValue END AS Overs
     FROM [dbo].[MergedDeposit] MD
@@ -134,7 +135,9 @@ final AS (
         DC.[Discrepancy Description],
         DC.[Discrepancy Category],
         CC.[Cash Centre Description With Type],
-        CONT.[GBP Value]
+        CONT.[GBP Value],
+        MD.[ProcessingDateKey]
+
     FROM  customer CUS 
     INNER JOIN mergeddeposit MD ON CUS.CustomerKey = MD.CustomerKey
     INNER JOIN bankaccount BA ON MD.BankAccountKey = BA.BankAccountKey
