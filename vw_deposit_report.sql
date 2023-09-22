@@ -94,6 +94,7 @@ container AS (
 
 final AS (
     SELECT 
+        CUS.CustomerKey,
         CUS.[Customer Number],
         CUS.[Customer Name],
         CUS.[Customer Type],

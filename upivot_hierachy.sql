@@ -110,10 +110,17 @@ select
 distinct
 cusKey as CustomerKey_RLS, -- use this for rls
 SUBSTRING(variable,6,1) as Level,
-value as CustomerKey -- us this to join to customer in tableau
+value as CustomerKey,
+c.[Customer Number] 
+
+-- us this to join to customer in tableau
 from all_levels
+
+inner join Customer c 
+on all_levels.cusKey = c.CustomerKey 
 
 )
 
 select * from rename_vw
-ORDER BY LEVEL ASC
+
+
