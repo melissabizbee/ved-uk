@@ -28,6 +28,8 @@ mergeddeposit AS (
         MD.[ChequeVolume],
         MD.[CoinValue],
         MD.[CoinVolume],
+        MD.[ContentVolume],
+        MD.[ContentValue],
         MD.CustomerKey,
         MD.[CustomerSerialNo],
         MD.[CustomerValue],
@@ -44,6 +46,7 @@ mergeddeposit AS (
         MD.[SealNumber],
         MD.[TotalValue],
         MD.[OriginalBagnumber],
+        MD.[SlipDate],
         CASE WHEN  CustomerValue <0 THEN TotalValue - CustomerValue END AS Shorts,
         CASE WHEN  CustomerValue >0 THEN TotalValue - CustomerValue END AS Overs
     FROM [dbo].[MergedDeposit] MD
@@ -54,7 +57,8 @@ bankaccount AS (
     SELECT 
         BA.[Account Number],
         BA.BankAccountKey,
-        BA.[Sort code]
+        BA.[Sort code],
+        BA.[Bank Short Name]
     FROM [dbo].[BankAccount] BA
 ),
 
@@ -94,13 +98,14 @@ container AS (
 
 final AS (
     SELECT 
-        CUS.CustomerKey,
+    	CUS.CustomerKey,
         CUS.[Customer Number],
         CUS.[Customer Name],
         CUS.[Customer Type],
         CUS.[Customer Status],
         CUS.[Customer Group],
         CUS.[Store Reference],
+        MD.[SlipDate],
         MD.[BagNumber],
         MD.[CashValue],
         MD.[ChequeValue],
@@ -115,6 +120,8 @@ final AS (
         MD.[ForeignVolume],
         MD.[ForgeryValue],
         MD.[ForgeryVolume],
+        MD.[ContentVolume],
+        MD.[ContentValue],
         MD.HistoryDateKey AS [History Date],
         MD.[NoteValue],
         MD.[NoteVolume],
@@ -122,6 +129,7 @@ final AS (
         MD.[TotalValue],
         BA.[Account Number],
         BA.[Sort code],
+        BA.[Bank Short Name],
         DC.[Discrepancy Code],
         DC.[Discrepancy Description],
         DC.[Discrepancy Category],
