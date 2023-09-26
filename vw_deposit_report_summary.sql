@@ -98,7 +98,7 @@ container AS (
 ),
 
 final AS (
-    SELECT 
+    SELECT distinct
     	CUS.CustomerKey,
         CUS.[Customer Number],
         CUS.[Customer Name],
