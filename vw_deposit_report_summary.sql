@@ -138,7 +138,7 @@ final AS (
         sum(MD.[DifferenceValue]) AS [DifferenceValue],
         sum(MD.[TotalValue]) AS [TotalValue],
         sum(CONT.[GBP Value]) AS [GBP Value],
-        sum(MD. Shorts) AS [Shorts],
+        sum(MD.Shorts) AS [Shorts],
         sum(MD.Overs) AS [Overs]
         
 
