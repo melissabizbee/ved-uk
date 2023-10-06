@@ -14,7 +14,7 @@ WITH customer AS (
         C.[Store Reference]
         
     FROM [dbo].[Customer] C
-    where [Customer Deleted On] is null
+    WHERE [Customer Deleted On] IS NULL
  ) ,
 
 mergeddeposit AS (
@@ -123,24 +123,27 @@ final AS (
         
        -- sum(MD.[NoteValue]) AS [Note Value],
       --  sum(MD.[NoteVolume]) As [Note Volume],
-        sum(MD.[ForeignValue]) AS [ForeignValue],
-        sum(MD.[ForeignVolume]) AS [ForeignVolume],
+        SUM(MD.[ForeignValue]) AS [ForeignValue],
+        SUM(MD.[ForeignVolume]) AS [ForeignVolume],
       --  sum(MD.[ForgeryValue]) AS [ForgeryValue] ,
       --  sum(MD.[ForgeryVolume]) AS [ForgeryVolume],
       --  sum(MD.[ContentValue]) AS [ContentValue],
       --  sum(MD.[ContentVolume]) AS [ContentVolume],
       --  sum(MD.[CashValue]) AS [CashValue],
-        sum(MD.[ChequeValue]) AS [ChequeValue],
-        sum(MD.[ChequeVolume]) AS [ChequeVolume],
+        SUM(MD.[ChequeValue]) AS [ChequeValue],
+        SUM(MD.[ChequeVolume]) AS [ChequeVolume],
       --  sum(MD.[CoinValue]) AS [CoinValue],
       --  sum(MD.[CoinVolume]) AS [CoinVolume],
       --  sum(MD.[CustomerValue]) AS [CustomerValue],
-        sum(MD.[DifferenceValue]) AS [DifferenceValue],
+        SUM(MD.[DifferenceValue]) AS [DifferenceValue],
        -- sum(MD.[TotalValue]) AS [TotalValue],
        -- sum(CONT.[GBP Value]) AS [GBP Value],
-        sum(MD. Shorts) AS [Shorts],
-        sum(MD.Overs) AS [Overs],
-        sum(1) AS [Credit with Differences]
+        SUM(MD. Shorts) AS [Shorts],
+        SUM(MD.Overs) AS [Overs],
+        CASE 
+		WHEN SUM(MD.DifferenceValue) > 0 THEN SUM(MD.TotalValue) 
+		ELSE 0 
+		END AS [Credit with Differences]
         
 
     FROM  customer CUS 
