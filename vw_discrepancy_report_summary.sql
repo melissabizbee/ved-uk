@@ -174,7 +174,9 @@ final AS (
         DC.[Discrepancy Code],
         DC.[Discrepancy Description],
         DC.[Discrepancy Category],
-        CC.[Cash Centre Description With Type]
+        CC.[Cash Centre Description With Type],
+       CAST((DATEADD(MONTH, DATEDIFF(MONTH, 0, HistoryDateKey), 0)) AS DATE) AS [History Period] -- required for drill-down
+
 
 )
 
