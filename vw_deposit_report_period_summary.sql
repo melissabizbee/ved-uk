@@ -11,7 +11,7 @@ WITH customer AS (
         C.[Customer Status],
         C.[Customer Type],
         C.CustomerKey,
-        C.[Store Reference]
+        C.[Store Reference] --add hierechy columns
         
     FROM [dbo].[Customer] C
     where [Customer Deleted On] is null
