@@ -50,6 +50,11 @@ mergeddeposit AS (
         MD.[ProcessingDateKey],
         CASE WHEN  CustomerValue <0 THEN TotalValue - CustomerValue END AS Shorts,
         CASE WHEN  CustomerValue >0 THEN TotalValue - CustomerValue END AS Overs,
+        
+        CAST((DATEADD(MONTH, DATEDIFF(MONTH, 0, HistoryDateKey), 0)) AS DATE) AS [History Period],
+		CAST((DATEADD(MONTH, DATEDIFF(MONTH, 0, SlipDate), 0)) AS DATE) AS [Slip Period],
+		CAST((DATEADD(MONTH, DATEDIFF(MONTH, 0, ProcessingDateKey), 0)) AS DATE) AS [Processing Period],
+		
         DATEADD(dd, -(DATEPART(dw, HistoryDateKey)-1), HistoryDateKey) [History WeekStart],
         DATEADD(dd, 7-(DATEPART(dw, HistoryDateKey)), HistoryDateKey) [History WeekEnd],
         DATEADD(dd, -(DATEPART(dw, SlipDate)-1), SlipDate) [Slip WeekStart],
@@ -130,6 +135,9 @@ final AS (
         DC.[Discrepancy Description],
         DC.[Discrepancy Category],
         CC.[Cash Centre Description With Type],
+        MD.[History Period],
+        MD.[Processing Period],
+        MD.[Slip Period],
         
         
         sum(MD.[NoteValue]) AS [Note Value],
@@ -184,7 +192,11 @@ final AS (
         DC.[Discrepancy Code],
         DC.[Discrepancy Description],
         DC.[Discrepancy Category],
-        CC.[Cash Centre Description With Type]
+        CC.[Cash Centre Description With Type],
+        MD.[History Period],
+        MD.[Processing Period],
+        MD.[Slip Period]
+        
 
 )
 
