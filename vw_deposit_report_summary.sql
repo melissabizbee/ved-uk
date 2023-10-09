@@ -176,7 +176,7 @@ final AS (
 )
 
 SELECT *,
-        CAST((DATEADD(MONTH, DATEDIFF(MONTH, 0, HistoryDateKey), 0)) AS DATE) AS [History Period] -- required for drill-down
+        CAST((DATEADD(MONTH, DATEDIFF(MONTH, 0, [History Date]), 0)) AS DATE) AS [History Period] -- required for drill-down
 
 
  FROM final;
