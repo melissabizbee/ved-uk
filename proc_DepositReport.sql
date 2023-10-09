@@ -1,3 +1,5 @@
+--- this proc is best used on a table with schedulling. we can import stored procedures into Tableau
+
 CREATE PROCEDURE GetRecordsBetweenDates
     @StartDate DATE,
     @EndDate DATE
