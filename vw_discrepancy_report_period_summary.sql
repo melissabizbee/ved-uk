@@ -47,9 +47,16 @@ mergeddeposit AS (
         MD.[TotalValue],
         MD.[OriginalBagnumber],
        -- MD.[SlipDate],
-        MD.[ProcessingDateKey],
+       -- MD.[ProcessingDateKey],
         CASE WHEN  CustomerValue <0 THEN TotalValue - CustomerValue END AS Shorts,
-        CASE WHEN  CustomerValue >0 THEN TotalValue - CustomerValue END AS Overs
+        CASE WHEN  CustomerValue >0 THEN TotalValue - CustomerValue END AS Overs,
+        
+        CAST((DATEADD(MONTH, DATEDIFF(MONTH, 0, HistoryDateKey), 0)) AS DATE) AS [History Period],
+
+		
+        DATEADD(dd, -(DATEPART(dw, HistoryDateKey)-1), HistoryDateKey) [History WeekStart],
+        DATEADD(dd, 7-(DATEPART(dw, HistoryDateKey)), HistoryDateKey) [History WeekEnd]
+   
     FROM [dbo].[MergedDeposit] MD
     WHERE MD.HistoryDateKey >= DATEADD(MONTH, DATEDIFF(MONTH, 0, GETDATE()) - 13, 0)
 ),
@@ -110,8 +117,8 @@ final AS (
         MD.[BagNumber],
      --   MD.[CustomerSerialNo],
         MD.[DiscrepancyBankAccountKey],
-        MD.HistoryDateKey AS [History Date],
-        MD.[ProcessingDateKey],
+        MD.[History Period],
+       -- MD.[ProcessingDateKey],
         MD.[SealNumber],       
         BA.[Account Number],
         BA.[Sort code],
@@ -165,8 +172,8 @@ final AS (
         MD.[BagNumber],
     --    MD.[CustomerSerialNo],
         MD.[DiscrepancyBankAccountKey],
-        MD.HistoryDateKey,
-        MD.[ProcessingDateKey],
+        MD.[History Period],
+    --    MD.[ProcessingDateKey],
         MD.[SealNumber],       
         BA.[Account Number],
         BA.[Sort code],
@@ -176,10 +183,7 @@ final AS (
         DC.[Discrepancy Category],
         CC.[Cash Centre Description With Type]
 
-
 )
 
-SELECT *,
-       CAST((DATEADD(MONTH, DATEDIFF(MONTH, 0,  [History Date]), 0)) AS DATE) AS [History Period] -- required for drill-down
-
+SELECT *
 FROM final;
