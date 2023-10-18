@@ -363,4 +363,4 @@ select * from final_all
 )
 
 
-SELECT * FROM final_all;
+SELECT * FROM final_last;
