@@ -1,5 +1,6 @@
 
--- 
+-- -- deposit report aggregated for drill-down
+
 
 WITH customer AS (
     SELECT 

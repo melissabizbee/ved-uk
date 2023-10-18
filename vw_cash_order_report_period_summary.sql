@@ -1,5 +1,5 @@
 
--- cash order report aggregated by history date for drill-down
+-- cash order report aggregated by history date for charts
 
 
 WITH customer AS (
