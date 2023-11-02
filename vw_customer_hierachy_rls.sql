@@ -118,7 +118,7 @@ from all_levels
 
 )
 
-select c.CustomerKey, c.[Customer Number] ,c.[Customer Name], vchr.Level, 
+select c.CustomerKey, c.[Customer Number] ,c.[Customer Name] as [Customer Name (RLS)], vchr.Level, 
 case when CustomerKey_RLS is null then c.CustomerKey ELSE CustomerKey_RLS end as CustomerKey_RLS,
 case when vchr.CustomerKey is null then c.CustomerKey ELSE vchr.CustomerKey end as CustomerKey
 
